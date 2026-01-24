@@ -22,7 +22,7 @@ public class MenuItemRepository {
                         rs.getInt("id"),
                         rs.getString("name"),
                         rs.getDouble("price"),
-                        rs.getBoolean("availabl")
+                        rs.getBoolean("available")
                 ));
             }
         }
