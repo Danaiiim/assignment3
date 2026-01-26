@@ -17,4 +17,9 @@ public class MenuItem {
     public String getName() { return name; }
     public double getPrice() { return price; }
     public boolean isAvailable() { return available; }
+
+    @Override
+    public String toString() {
+        return id + ". " + name + " - $" + price;
+    }
 }

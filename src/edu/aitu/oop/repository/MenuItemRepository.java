@@ -9,23 +9,48 @@ import java.util.List;
 
 public class MenuItemRepository {
 
-    public List<MenuItem> findAvailable() throws SQLException {
-        List<MenuItem> list = new ArrayList<>();
-        String sql = "SELECT * FROM menu_items WHERE available = true";
+    private final Connection connection = DatabaseConfig.getConnection();
 
-        try (Connection conn = DatabaseConfig.getConnection();
-             Statement st = conn.createStatement();
-             ResultSet rs = st.executeQuery(sql)) {
+    public MenuItem findById(int id) {
+        try {
+            String sql = "SELECT * FROM menu_items WHERE id = ?";
+            PreparedStatement stmt = connection.prepareStatement(sql);
+            stmt.setInt(1, id);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return new MenuItem(
+                        rs.getInt("id"),
+                        rs.getString("name"),
+                        rs.getDouble("price"),
+                        rs.getBoolean("available")
+                );
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
+    public List<MenuItem> findAvailable() {
+        List<MenuItem> menu = new ArrayList<>();
+        try {
+            String sql = "SELECT * FROM menu_items WHERE available = true";
+            Statement stmt = connection.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
-                list.add(new MenuItem(
+                menu.add(new MenuItem(
                         rs.getInt("id"),
                         rs.getString("name"),
                         rs.getDouble("price"),
                         rs.getBoolean("available")
                 ));
             }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-        return list;
+        return menu;
     }
 }
+
+
+

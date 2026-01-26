@@ -11,7 +11,12 @@ public class DatabaseConfig {
     private static final String USER = "postgres.gvivkovrvjofrgarcbme";
     private static final String PASSWORD = "Danaim0801**";
 
-    public static Connection getConnection() throws SQLException {
-        return DriverManager.getConnection(URL, USER, PASSWORD);
+    public static Connection getConnection() {
+        try {
+            return DriverManager.getConnection(URL, USER, PASSWORD);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 }
