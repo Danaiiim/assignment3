@@ -1,17 +1,18 @@
 package edu.aitu.oop.entity;
 
-public class Order {
-    private int id;
-    private int customerId;
-    private String status;
+public abstract class Order {
+    private String customerName;
+    private double totalPrice;
 
-    public Order(int id, int customerId, String status) {
-        this.id = id;
-        this.customerId = customerId;
-        this.status = status;
-    }
+    // ОБЯЗАТЕЛЬНО: Пустой конструктор (чтобы ошибки на скрине исчезли)
+    public Order() {}
 
-    public int getId() { return id; }
-    public int getCustomerId() { return customerId; }
-    public String getStatus() { return status; }
+    // Геттеры и сеттеры (проверь, чтобы имена совпадали!)
+    public String getCustomerName() { return customerName; }
+    public void setCustomerName(String customerName) { this.customerName = customerName; }
+
+    public double getTotalPrice() { return totalPrice; }
+    public void setTotalPrice(double totalPrice) { this.totalPrice = totalPrice; }
+
+    public abstract String getOrderType(); // Абстрактный метод
 }
