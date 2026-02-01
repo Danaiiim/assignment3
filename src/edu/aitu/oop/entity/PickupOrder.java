@@ -1,11 +1,9 @@
 package edu.aitu.oop.entity;
 
 public class PickupOrder extends Order {
-    @Override
-    public String getOrderType() { return "Pickup"; }
-
-    @Override
-    public String toString() {
-        return "Order [Type: Pickup, Customer: " + getCustomerName() + ", Total: " + getTotalPrice() + "]";
+    public PickupOrder(int id, int customerId, String customerName, double totalPrice) {
+        super(id, customerId, customerName, totalPrice);
     }
+    @Override
+    public String getType() { return "PickupOrder"; }
 }
