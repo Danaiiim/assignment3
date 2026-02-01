@@ -5,17 +5,19 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class DatabaseConfig {
-
-    private static final String URL =
-            "jdbc:postgresql://aws-1-ap-southeast-1.pooler.supabase.com:5432/postgres";
-    private static final String USER = "postgres.gvivkovrvjofrgarcbme";
-     static final String PASSWORD = "Danaim0801**";
+    private static final String URL = System.getenv("DB_URL");
+    private static final String USER = System.getenv("DB_USER");
+    private static final String PASSWORD = System.getenv("DB_PASSWORD");
 
     public static Connection getConnection() {
         try {
+            if (URL == null || USER == null || PASSWORD == null) {
+                System.err.println("Database environment variables are not set!");
+                return null;
+            }
             return DriverManager.getConnection(URL, USER, PASSWORD);
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.err.println("Connection failed: " + e.getMessage());
             return null;
         }
     }
