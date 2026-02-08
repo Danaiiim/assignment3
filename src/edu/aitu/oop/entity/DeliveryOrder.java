@@ -1,10 +1,9 @@
 package edu.aitu.oop.entity;
 
 public class DeliveryOrder extends Order {
-    public DeliveryOrder(int id, int customerId, String customerName, String status, double totalPrice) {
-        super(id, customerId, customerName, status, totalPrice);
+    public DeliveryOrder(int id, int customerId, String customerName, double totalPrice, String status) {
+        super(id, customerId, customerName, totalPrice, status);
     }
-
     @Override
-    public String getType() { return "DeliveryOrder"; }
+    public String getType() { return "Delivery"; }
 }

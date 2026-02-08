@@ -5,19 +5,19 @@ import edu.aitu.oop.entity.*;
 public class OrderFactory {
 
     public static Order createOrder(
-            int id,
             String type,
+            int id,
             int customerId,
             String customerName,
-            double totalPrice
+            double totalPrice,
+            String status
     ) {
-        String status = "ACTIVE";
-
         return switch (type.toLowerCase()) {
-            case "dinein" -> new DineInOrder(id, customerId, customerName, status, totalPrice);
-            case "delivery" -> new DeliveryOrder(id, customerId, customerName, status, totalPrice);
-            case "pickup" -> new PickupOrder(id, customerId, customerName, status, totalPrice);
-            default -> throw new IllegalArgumentException("Unknown order type: " + type);
+            case "dinein" -> new DineInOrder(id, customerId, customerName, totalPrice, status);
+            case "delivery" -> new DeliveryOrder(id, customerId, customerName, totalPrice, status);
+            case "pickup" -> new PickupOrder(id, customerId, customerName, totalPrice, status);
+            default -> throw new IllegalArgumentException("Unknown order type");
         };
     }
 }
+

@@ -1,7 +1,6 @@
 package edu.aitu.oop;
 
 import edu.aitu.oop.service.OrderService;
-
 import java.util.Scanner;
 
 public class Main {
@@ -44,10 +43,7 @@ public class Main {
                         int orderId = Integer.parseInt(scanner.nextLine());
                         orderService.completeOrder(orderId);
                     }
-                    case "0" -> {
-                        System.out.println("Exiting...");
-                        return;
-                    }
+                    case "0" -> { System.out.println("Exiting..."); return; }
                     default -> System.out.println("Invalid option");
                 }
             } catch (Exception e) {
@@ -56,3 +52,4 @@ public class Main {
         }
     }
 }
+

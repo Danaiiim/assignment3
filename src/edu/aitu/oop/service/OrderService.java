@@ -2,50 +2,36 @@ package edu.aitu.oop.service;
 
 import edu.aitu.oop.builder.OrderBuilder;
 import edu.aitu.oop.entity.Order;
+import edu.aitu.oop.repository.OrderRepository;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class OrderService {
-    private final List<Order> orders = new ArrayList<>();
+    private final OrderRepository repository = new OrderRepository();
     private int nextId = 1;
 
     public Order createOrder(String type, int customerId, String customerName, double totalPrice) {
+        int id = repository.createOrder(customerId, customerName, type, totalPrice);
         Order order = new OrderBuilder()
-                .id(nextId++)
+                .id(id)
                 .customerId(customerId)
                 .customerName(customerName)
                 .totalPrice(totalPrice)
                 .type(type)
+                .status("ACTIVE")
                 .build();
-        orders.add(order);
         return order;
     }
 
     public void showActiveOrders() {
-        List<Order> active = orders.stream()
-                .filter(o -> o.getStatus().equalsIgnoreCase("ACTIVE"))
-                .collect(Collectors.toList());
-        if (active.isEmpty()) {
-            System.out.println("No active orders");
-        } else {
-            active.forEach(o -> System.out.printf(
-                    "Order ID: %d, Customer: %s, Total: %.2f, Status: %s, Type: %s%n",
-                    o.getId(), o.getCustomerName(), o.getTotalPrice(), o.getStatus(), o.getType()));
-        }
+        List<String> activeOrders = repository.findActiveOrders();
+        if (activeOrders.isEmpty()) System.out.println("No active orders");
+        else activeOrders.forEach(System.out::println);
     }
 
     public void completeOrder(int orderId) {
-        orders.stream()
-                .filter(o -> o.getId() == orderId)
-                .findFirst()
-                .ifPresentOrElse(
-                        o -> {
-                            o.setStatus("COMPLETED");
-                            System.out.println("Order " + orderId + " completed");
-                        },
-                        () -> System.out.println("Order not found: " + orderId)
-                );
+        repository.completeOrder(orderId);
+        System.out.println("Order " + orderId + " completed");
     }
 }
+
