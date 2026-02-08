@@ -13,7 +13,6 @@ public class OrderService {
 
     public Order createOrder(String type, int customerId, String customerName, double totalPrice) {
         Order order = new OrderBuilder()
-                .id(nextId++)
                 .customerId(customerId)
                 .customerName(customerName)
                 .totalPrice(totalPrice)

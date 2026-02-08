@@ -1,9 +1,10 @@
 package edu.aitu.oop.entity;
 
 public class DineInOrder extends Order {
-    public DineInOrder(int id, int customerId, String customerName, double totalPrice) {
-        super(id, customerId, customerName, totalPrice);
+    public DineInOrder(int id, int customerId, String customerName, String status, double totalPrice) {
+        super(id, customerId, customerName, status, totalPrice);
     }
+
     @Override
     public String getType() { return "DineInOrder"; }
 }
