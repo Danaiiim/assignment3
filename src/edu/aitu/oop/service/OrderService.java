@@ -13,6 +13,7 @@ public class OrderService {
 
     public Order createOrder(String type, int customerId, String customerName, double totalPrice) {
         Order order = new OrderBuilder()
+                .id(nextId++)
                 .customerId(customerId)
                 .customerName(customerName)
                 .totalPrice(totalPrice)
@@ -26,10 +27,13 @@ public class OrderService {
         List<Order> active = orders.stream()
                 .filter(o -> o.getStatus().equalsIgnoreCase("ACTIVE"))
                 .collect(Collectors.toList());
-        if (active.isEmpty()) System.out.println("No active orders");
-        else active.forEach(o -> System.out.printf(
-                "Order ID: %d, Customer: %s, Total: %.2f, Status: %s, Type: %s%n",
-                o.getId(), o.getCustomerName(), o.getTotalPrice(), o.getStatus(), o.getType()));
+        if (active.isEmpty()) {
+            System.out.println("No active orders");
+        } else {
+            active.forEach(o -> System.out.printf(
+                    "Order ID: %d, Customer: %s, Total: %.2f, Status: %s, Type: %s%n",
+                    o.getId(), o.getCustomerName(), o.getTotalPrice(), o.getStatus(), o.getType()));
+        }
     }
 
     public void completeOrder(int orderId) {
@@ -37,9 +41,11 @@ public class OrderService {
                 .filter(o -> o.getId() == orderId)
                 .findFirst()
                 .ifPresentOrElse(
-                        o -> { o.setStatus("COMPLETED"); System.out.println("Order " + orderId + " completed"); },
+                        o -> {
+                            o.setStatus("COMPLETED");
+                            System.out.println("Order " + orderId + " completed");
+                        },
                         () -> System.out.println("Order not found: " + orderId)
                 );
     }
 }
-
