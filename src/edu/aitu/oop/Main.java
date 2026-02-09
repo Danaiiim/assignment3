@@ -1,12 +1,15 @@
 package edu.aitu.oop;
 
 import edu.aitu.oop.service.OrderService;
+import edu.aitu.oop.component.MenuManagementComponent;
+
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         OrderService orderService = new OrderService();
+        MenuManagementComponent menuComponent = new MenuManagementComponent(); // компонент меню
 
         while (true) {
             System.out.println("\n=== FOOD ORDERING SYSTEM (Endterm) ===");
@@ -15,6 +18,7 @@ public class Main {
             System.out.println("3. Create Pickup Order");
             System.out.println("4. Show Active Orders");
             System.out.println("5. Complete Order");
+            System.out.println("6. Show Menu"); // меню теперь последним
             System.out.println("0. Exit");
             System.out.print("Choose option: ");
             String option = scanner.nextLine();
@@ -43,7 +47,14 @@ public class Main {
                         int orderId = Integer.parseInt(scanner.nextLine());
                         orderService.completeOrder(orderId);
                     }
-                    case "0" -> { System.out.println("Exiting..."); return; }
+                    case "6" -> { // показать меню последним
+                        System.out.println("=== Available Menu ===");
+                        menuComponent.getAvailableMenu().forEach(System.out::println);
+                    }
+                    case "0" -> {
+                        System.out.println("Exiting...");
+                        return;
+                    }
                     default -> System.out.println("Invalid option");
                 }
             } catch (Exception e) {
@@ -52,4 +63,3 @@ public class Main {
         }
     }
 }
-
